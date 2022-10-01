@@ -1,0 +1,21 @@
+li:nth-child(even) {
+    background-color: lightcoral;
+}
+.las {
+    padding-left: 25px;
+    padding-right: 25px;
+}
+.form  {
+    display: inline;
+    padding-left: 55px;
+}
+.list-item {
+    display: flex;
+    justify-content: space-around;
+    width: 60%;
+}
+.titles {
+    display: flex;
+    justify-content: space-around;
+    width: 60%;
+}
