@@ -41,7 +41,13 @@ session_start();
 
     while ($row = $result->fetch_assoc()) {
         echo "<h1>" . $row['rubrik'] . "</h1>";
+        $rubrik = $row['rubrik'];
     }
+
+    $sql = "SELECT * FROM $rubrik";
+    $result = $conn->query($sql);
+
+    echo "Det finns " . $result->num_rows . " inlägg i denna tråd:";
     ?>
 </body>
 
