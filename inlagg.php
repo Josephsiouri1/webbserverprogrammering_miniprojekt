@@ -44,10 +44,20 @@ session_start();
         $rubrik = $row['rubrik'];
     }
 
-    $sql = "SELECT * FROM $rubrik";
+    $sql = "SELECT * FROM inlagg";
     $result = $conn->query($sql);
 
-    echo "Det finns " . $result->num_rows . " inlägg i denna tråd:";
+    echo "Det finns " . $result->num_rows . " inlägg i denna tråd: <br>";
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            echo "Skrivet av " . $row['skriven_av'] . "<span class='kommentar'>" . $row['kommentar'] . "</span> <br>" . $row['datum'];
+        }
+    }
+
+    $sql = "INSERT INTO inlagg (id, skriven_av, kommentar, datum, trad_id) VALUES ($result->num_rows+1, '$skapad_av', '$inlagg', NOW(), )";
+    $result = $conn->query($sql);
+
     ?>
 </body>
 
