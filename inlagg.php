@@ -58,7 +58,7 @@ session_start();
 
     ?>
     Svara på denna tråd:
-    <form action="ny_inlagg.php" method="post">
+    <form action="ny_inlagg.php?trad_id=$GET['id']" method="post">
         <textarea name="kommentar" rows="4" cols="50"></textarea> <br>
         Lösenordet till epostkontot: <br>
         <input type="password" name="check_password"> <br>
