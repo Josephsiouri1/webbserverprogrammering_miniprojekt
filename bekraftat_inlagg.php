@@ -24,7 +24,7 @@ session_start();
     <hr>
 
     <?php
-    echo "Inloggad som " . "<a href=''>" . $_SESSION['anvandernamn'] . "</a>";
+    echo "Inloggad som " . "<a href='mailto:" . $_SESSION['anvandernamn'] . "?subject='HTML link''>" . $_SESSION['anvandernamn'] . "</a>";
     echo "<form action='tradar.php' method='post'>
       <input type='submit' value='Tillbaka till startsidan'>
        </form> <br>";

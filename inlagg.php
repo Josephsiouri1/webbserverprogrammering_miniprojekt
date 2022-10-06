@@ -9,6 +9,7 @@ session_start();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Inlägg</title>
 </head>
 
@@ -55,10 +56,14 @@ session_start();
         }
     }
 
-    $sql = "INSERT INTO inlagg (id, skriven_av, kommentar, datum, trad_id) VALUES ($result->num_rows+1, '$skapad_av', '$inlagg', NOW(), )";
-    $result = $conn->query($sql);
-
     ?>
+    Svara på denna tråd:
+    <form action="ny_inlagg.php" method="post">
+        <textarea name="kommentar" rows="4" cols="50"></textarea> <br>
+        Lösenordet till epostkontot: <br>
+        <input type="password" name="check_password"> <br>
+        <input type="submit" value="Publicera">
+    </form>
 </body>
 
 </html>
