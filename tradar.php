@@ -1,6 +1,3 @@
-<?php
-session_start()
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,12 +20,12 @@ session_start()
     </form>
     <hr>
     <?php
-    $redan_inloggad = $_SESSION['anvandernamn'];
+    session_start();
 
-    if (!$redan_inloggad) {
+    if (!isset($_SESSION["anvandernamn"])) {
         $anvandernamn = $_POST['anvandernamn'];
         $losenord = $_POST['losenord'];
-
+        //maybe assositive array for all inlogs
         if ($anvandernamn == "jos" && $losenord == "sio" || $anvandernamn == "deo" && $losenord == "leo" || $anvandernamn == "ulf" && $losenord == "rulf") {
             echo "Välkommen <a href='mailto:$anvandernamn?subject='HTML link''>$anvandernamn</a>";
 
@@ -62,15 +59,15 @@ session_start()
             if ($result->num_rows > 0) {
                 echo "<ol>";
                 while ($row = $result->fetch_assoc()) {
-                    echo " <li class='list-item'> <form class='form' action='inlagg.php?id=" . $row['id'] . "'" . "method='post'>
+                    echo " <li class='list-item'>" . "<span>" . $row['id'] . "</span>" . "<form class='form' action='inlagg.php?id=" . $row['id'] . "'" . "method='post'>
                 <input class='las' type='submit' value='läs'>
-                </form>" . "<span>" .  $row['rubrik'] . "</span>" . "<span>" . "<a href='mailto:" . $row['skapad_av'] . "?subject='HTML link''>" . $row['skapad_av'] . "</a>" . "</span> " . "<span>" . $row['senaste_inlagg'] . "</span>" . "<li>";
+                </form>" . "<span>" .  $row['rubrik'] . "</span>" . "<span>" . "<a href='mailto:" . $row['skapad_av'] . "?subject='HTML link''>" . $row['skapad_av'] . "</a>" . "</span> " . "<span>" . $row['senaste_inlagg'] . "</span>" . "</li>";
                 }
             }
             echo "</ol>";
         }
-    } else if ($redan_inloggad) {
-        echo "Välkommen <a href='mailto:$redan_inloggad?subject='HTML link''>$redan_inloggad</a>";
+    } else if (isset($_SESSION["anvandernamn"])) {
+        echo "Välkommen <a href='mailto:" . $_SESSION["anvandernamn"] . "?subject='HTML link''>" . $_SESSION["anvandernamn"] . "</a>";
 
         echo "<form action='nytrad.php' method='post'>
             <input type='submit' value='Skapa ny tråd'>

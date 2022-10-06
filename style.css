@@ -1,5 +1,6 @@
-li:nth-child(even) {
+.list-item:nth-child(even) {
     background-color: lightcoral;
+    padding: 10px;
 }
 .las {
     padding-left: 25px;
