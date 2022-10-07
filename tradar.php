@@ -40,7 +40,7 @@
         $result = $conn->query($sql);
 
         $account_check = array();
-
+        //problem med återinloggning
         while ($row = $result->fetch_assoc()) {
             if ($anvandernamn == $row['username'] && $losenord == $row['password']) {
                 echo "Välkommen <a href='mailto:$anvandernamn?subject='HTML link''>$anvandernamn</a>";
