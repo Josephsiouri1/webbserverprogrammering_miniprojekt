@@ -55,7 +55,7 @@ session_start();
 
     function random_color()
     {
-        $array_colors = array("lightred", "lightblue", "#E74892", "lightgreen", "#DB99E0", "orange");
+        $array_colors = array("lightblue", "#E74892", "lightgreen", "#DB99E0", "orange");
         $array_index = array_rand($array_colors);
         return $array_colors[$array_index];
     }
