@@ -6,4 +6,7 @@
 <form action="loggaut.php">
     <input type="submit" value="Logga ut">
 </form>
+<form action="skapa_ny_konto.php">
+    <input type="submit" value="Skapa ny konto">
+</form>
 <hr>

@@ -19,7 +19,10 @@ session_start();
         <input type="submit" value="Logga in"> <br> <br>
     </form>
     <form action="loggaut.php">
-        <input type="submit" value="Logga ut">
+        <input type="submit" value="Logga ut"> <br> <br>
+    </form>
+    <form action="skapa_ny_konto.php">
+        <input type="submit" value="Skapa ny konto">
     </form>
     <hr>
 

@@ -16,7 +16,10 @@
         <input type="submit" value="Logga in"> <br> <br>
     </form>
     <form action="loggaut.php">
-        <input type="submit" value="Logga ut">
+        <input type="submit" value="Logga ut"> <br> <br>
+    </form>
+    <form action="skapa_ny_konto.php">
+        <input type="submit" value="Skapa ny konto">
     </form>
     <hr>
     <?php
@@ -25,6 +28,14 @@
     if (!isset($_SESSION["anvandernamn"])) {
         $anvandernamn = $_POST['anvandernamn'];
         $losenord = $_POST['losenord'];
+
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "webbserverprogrammering";
+
+        $conn = new mysqli($servername, $username, $password, $dbname);
+
         //maybe assositive array for all inlogs
         if ($anvandernamn == "jos" && $losenord == "sio" || $anvandernamn == "deo" && $losenord == "leo" || $anvandernamn == "ulf" && $losenord == "rulf") {
             echo "Välkommen <a href='mailto:$anvandernamn?subject='HTML link''>$anvandernamn</a>";
@@ -34,13 +45,6 @@
             echo "<form action='nytrad.php' method='post'>
             <input type='submit' value='Skapa ny tråd'>
             </form> <br>";
-
-            $servername = "localhost";
-            $username = "root";
-            $password = "";
-            $dbname = "webbserverprogrammering";
-
-            $conn = new mysqli($servername, $username, $password, $dbname);
 
             $sql = "SELECT * FROM tradar";
             $result = $conn->query($sql);
