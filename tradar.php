@@ -36,41 +36,51 @@
 
         $conn = new mysqli($servername, $username, $password, $dbname);
 
-        //maybe assositive array for all inlogs
-        if ($anvandernamn == "jos" && $losenord == "sio" || $anvandernamn == "deo" && $losenord == "leo" || $anvandernamn == "ulf" && $losenord == "rulf") {
-            echo "Välkommen <a href='mailto:$anvandernamn?subject='HTML link''>$anvandernamn</a>";
+        $sql = "SELECT * FROM users";
+        $result = $conn->query($sql);
 
-            $_SESSION['anvandernamn'] = $anvandernamn;
-            $_SESSION['losenord'] = $losenord;
-            echo "<form action='nytrad.php' method='post'>
-            <input type='submit' value='Skapa ny tråd'>
-            </form> <br>";
+        $account_check = array();
 
-            $sql = "SELECT * FROM tradar";
-            $result = $conn->query($sql);
+        while ($row = $result->fetch_assoc()) {
+            if ($anvandernamn == $row['username'] && $losenord == $row['password']) {
+                echo "Välkommen <a href='mailto:$anvandernamn?subject='HTML link''>$anvandernamn</a>";
+
+                $_SESSION['anvandernamn'] = $anvandernamn;
+                $_SESSION['losenord'] = $losenord;
+                echo "<form action='nytrad.php' method='post'>
+                <input type='submit' value='Skapa ny tråd'>
+                </form> <br>";
+
+                $sql = "SELECT * FROM tradar";
+                $result = $conn->query($sql);
 
 
-            echo "Det finns $result->num_rows trådar: <br> <br>";
+                echo "Det finns $result->num_rows trådar: <br> <br>";
 
-            echo "<div class='titles'>";
-            echo "<span><b> Nr </b></span>";
-            echo "<span><b> Inläggen</b></span>";
-            echo "<span><b> Rubrik</b></span>";
-            echo "<span><b> Skapad av</b></span>";
-            echo "<span><b> Senaste inlägg</b></span>";
-            echo "</div>";
+                echo "<div class='titles'>";
+                echo "<span><b> Nr </b></span>";
+                echo "<span><b> Inläggen</b></span>";
+                echo "<span><b> Rubrik</b></span>";
+                echo "<span><b> Skapad av</b></span>";
+                echo "<span><b> Senaste inlägg</b></span>";
+                echo "</div>";
 
-            if ($result->num_rows > 0) {
-                echo "<ol>";
-                while ($row = $result->fetch_assoc()) {
-                    echo " <li class='list-item'>" . "<span>" . $row['id'] . "</span>" . "<form class='form' action='inlagg.php?id=" . $row['id'] . "'" . "method='post'>
-                <input class='las' type='submit' value='läs'>
-                </form>" . "<span>" .  $row['rubrik'] . "</span>" . "<span>" . "<a href='mailto:" . $row['skapad_av'] . "?subject='HTML link''>" . $row['skapad_av'] . "</a>" . "</span> " . "<span>" . $row['senaste_inlagg'] . "</span>" . "</li>";
+                if ($result->num_rows > 0) {
+                    echo "<ol>";
+                    while ($row = $result->fetch_assoc()) {
+                        echo " <li class='list-item'>" . "<span>" . $row['id'] . "</span>" . "<form class='form' action='inlagg.php?id=" . $row['id'] . "'" . "method='post'>
+                    <input class='las' type='submit' value='läs'>
+                    </form>" . "<span>" .  $row['rubrik'] . "</span>" . "<span>" . "<a href='mailto:" . $row['skapad_av'] . "?subject='HTML link''>" . $row['skapad_av'] . "</a>" . "</span> " . "<span>" . $row['senaste_inlagg'] . "</span>" . "</li>";
+                    }
                 }
+                echo "</ol>";
+                array_push($account_check, false);
+            } else {
+                array_push($account_check, true);
             }
-            echo "</ol>";
-        } else {
-            echo "Login misslyckades!";
+        }
+        if (!in_array(false, $account_check)) { //om det är en konto som matchar så körs inte den if-satsen
+            echo "Login misslyckades";
         }
     } else if (isset($_SESSION["anvandernamn"])) {
         echo "Välkommen <a href='mailto:" . $_SESSION["anvandernamn"] . "?subject='HTML link''>" . $_SESSION["anvandernamn"] . "</a>";
