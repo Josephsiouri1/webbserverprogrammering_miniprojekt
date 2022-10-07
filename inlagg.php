@@ -46,24 +46,35 @@ session_start();
     }
 
     $sql = "SELECT * FROM inlagg";
+    $result_number = $conn->query($sql);
+
+    echo "Det finns " . $result_number->num_rows . " inlägg i denna tråd: <br> <br>";
+
+    $sql = "SELECT * FROM inlagg WHERE trad_id = " . $_GET['id'];
     $result = $conn->query($sql);
 
-    echo "Det finns " . $result->num_rows . " inlägg i denna tråd: <br>";
+    function random_color()
+    {
+        $array_colors = array("lightred", "lightblue", "#E74892", "lightgreen", "#DB99E0", "orange");
+        $array_index = array_rand($array_colors);
+        return $array_colors[$array_index];
+    }
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            echo "Skrivet av " . $row['skriven_av'] . "<span class='kommentar'>" . $row['kommentar'] . "</span> <br>" . $row['datum'];
+            echo "<p style='background-color:" . random_color() . "';>Skrivet av " . "<a href='mailto:" . $row['skriven_av'] . "?subject='HTML link''>" . $row['skriven_av'] . "</a>" . "<span class='kommentar'>" . $row['kommentar'] . "</span> <br>" . $row['datum'] . " </p> <hr> <br> <br>";
         }
     }
+    echo "Svara på denna tråd: <br>
+    <form action='ny_inlagg.php?trad_id=" . $_GET['id'] . "' method='post'>
+    <textarea name='kommentar' rows='4' cols='50'></textarea> <br>
+    Lösenordet till epostkontot: <br>
+    <input type='password' name='check_password'> <br>
+    <input type='submit' value='Publicera'>
+   </form>";
 
     ?>
-    Svara på denna tråd:
-    <form action="ny_inlagg.php?trad_id=$GET['id']" method="post">
-        <textarea name="kommentar" rows="4" cols="50"></textarea> <br>
-        Lösenordet till epostkontot: <br>
-        <input type="password" name="check_password"> <br>
-        <input type="submit" value="Publicera">
-    </form>
+
 </body>
 
 </html>

@@ -30,10 +30,10 @@
             echo "Välkommen <a href='mailto:$anvandernamn?subject='HTML link''>$anvandernamn</a>";
 
             $_SESSION['anvandernamn'] = $anvandernamn;
-
+            $_SESSION['losenord'] = $losenord;
             echo "<form action='nytrad.php' method='post'>
             <input type='submit' value='Skapa ny tråd'>
-        </form> <br>";
+            </form> <br>";
 
             $servername = "localhost";
             $username = "root";
@@ -65,6 +65,8 @@
                 }
             }
             echo "</ol>";
+        } else {
+            echo "Login misslyckades!";
         }
     } else if (isset($_SESSION["anvandernamn"])) {
         echo "Välkommen <a href='mailto:" . $_SESSION["anvandernamn"] . "?subject='HTML link''>" . $_SESSION["anvandernamn"] . "</a>";
@@ -97,14 +99,12 @@
         if ($result->num_rows > 0) {
             echo "<ol>";
             while ($row = $result->fetch_assoc()) {
-                echo " <li class='list-item'> <form class='form' action='inlagg.php?id=" . $row['id'] . "'" . "method='post'>
+                echo " <li class='list-item'>" . "<span>" . $row['id'] . "</span>" . "<form class='form' action='inlagg.php?id=" . $row['id'] . "'" . "method='post'>
                 <input class='las' type='submit' value='läs'>
-                </form>" . "<span>" .  $row['rubrik'] . "</span>" . "<span>" . "<a href='mailto:" . $row['skapad_av'] . "?subject='HTML link''>" . $row['skapad_av'] . "</a>" . "</span> " . "<span>" . $row['senaste_inlagg'] . "</span>" . "<li>";
+                </form>" . "<span>" .  $row['rubrik'] . "</span>" . "<span>" . "<a href='mailto:" . $row['skapad_av'] . "?subject='HTML link''>" . $row['skapad_av'] . "</a>" . "</span> " . "<span>" . $row['senaste_inlagg'] . "</span>" . "</li>";
             }
         }
         echo "</ol>";
-    } else {
-        echo "Login misslyckades!";
     }
 
     ?>
