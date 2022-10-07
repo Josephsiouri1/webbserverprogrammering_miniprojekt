@@ -45,13 +45,11 @@ session_start();
         $rubrik = $row['rubrik'];
     }
 
-    $sql = "SELECT * FROM inlagg";
-    $result_number = $conn->query($sql);
-
-    echo "Det finns " . $result_number->num_rows . " inlägg i denna tråd: <br> <br>";
 
     $sql = "SELECT * FROM inlagg WHERE trad_id = " . $_GET['id'];
     $result = $conn->query($sql);
+
+    echo "Det finns " . $result->num_rows . " inlägg i denna tråd: <br> <br>";
 
     function random_color()
     {
