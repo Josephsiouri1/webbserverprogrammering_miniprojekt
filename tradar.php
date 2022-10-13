@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <form action="tradar.php" method="post">
+    <form action="ater_inloggning.php" method="post">
         Användernamn: &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&nbsp;&nbsp;<input type="text" name="anvandernamn"> <br>
         Lösenord för användaren: <input type="password" name="losenord"> <br>
         <input type="submit" value="Logga in"> <br> <br>
