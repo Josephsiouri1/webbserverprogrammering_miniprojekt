@@ -30,9 +30,18 @@
 
     $conn = new mysqli($servername, $username, $password, $dbname);
 
-    $sql = "DELETE FROM tradar WHERE id=" . $_GET['id'];
-    $result = $conn->query($sql);
-    echo "Tråden med id " . $_GET['id'] . " togs bort.<br><br>";
+    $id =  $_GET['id'];
+    $skapad_av =  $_GET['skapad_av'];
+    $inloggning =  $_GET['inloggning'];
+
+    if ($skapad_av == $inloggning) {
+        $sql = "DELETE FROM tradar WHERE id=$id";
+        $result = $conn->query($sql);
+        echo "Tråden med id " . $_GET['id'] . " togs bort.<br><br>";
+    } else {
+        echo "Du kan inte ta bort andras inlägg.<br><br>";
+    }
+
     echo "<form action='tradar.php' method='post'>
     <input type='submit' value='Tillbaka till startsidan'>
      </form>";
