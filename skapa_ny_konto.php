@@ -12,7 +12,10 @@
     <form action="registera_ny_konto.php" method="post">
         Användernamn: &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&nbsp;&nbsp;<input type="text" name="ny_anvandernamn"> <br>
         Lösenord för användaren: <input type="password" name="ny_losenord"> <br> <br>
-        <input type="submit" value="Skapa konto"> <br>
+        <input type="submit" value="Skapa konto"> <br> <br>
+    </form>
+    <form action='tradar.php' method='post'>
+        <input type='submit' value='Tillbaka till startsidan'>
     </form>
     <hr>
 </body>

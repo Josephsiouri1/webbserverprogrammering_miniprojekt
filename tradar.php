@@ -73,7 +73,7 @@
                 while ($row = $result->fetch_assoc()) {
                     echo " <li class='list-item'>" . "<span>" . $row['id'] . "</span>" . "<form class='form' action='inlagg.php?id=" . $row['id'] . "'" . "method='post'>
                 <input class='las' type='submit' value='läs'>
-                </form>" . "<span>" .  $row['rubrik'] . "</span>" . "<span>" . "<a href='mailto:" . $row['skapad_av'] . "?subject='HTML link''>" . $row['skapad_av'] . "</a>" . "</span> " . "<span>" . $row['senaste_inlagg'] . "</span>" . "</li>";
+                </form>" . "<span>" .  $row['rubrik'] . "</span>" . "<span>" . "<a href='mailto:" . $row['skapad_av'] . "?subject='HTML link''>" . $row['skapad_av'] . "</a>" . "</span> " . "<span>" . $row['senaste_inlagg'] . "</span>" . "<form action='ta_bort_trad.php?id=" . $row['id'] . "' method='post'><input type='submit' value='Ta bort'></form>" . "</li>";
                 }
             }
             echo "</ol>";
