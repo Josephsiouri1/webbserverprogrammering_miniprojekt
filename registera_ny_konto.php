@@ -17,7 +17,7 @@ $result_users = $conn->query($sql);
 function duplicate_account($result_users, $ny_anvandernamn, $ny_losenord)
 {
     while ($row = $result_users->fetch_assoc()) {
-        if ($ny_anvandernamn == $row['anvandernamn'] && $ny_losenord == $row['losenord']) {
+        if ($ny_anvandernamn == $row['username'] && $ny_losenord == $row['password']) {
             return true;
         }
     }
