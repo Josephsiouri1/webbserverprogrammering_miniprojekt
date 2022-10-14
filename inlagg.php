@@ -63,7 +63,7 @@ session_start();
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            echo "<p style='background-color:" . random_color() . "';>Skrivet av " . "<a href='mailto:" . $row['skriven_av'] . "?subject='HTML link''>" . $row['skriven_av'] . "</a>" . "<span class='kommentar'>" . $row['kommentar'] . "</span> <br>" . $row['datum'] . " </p> <hr> <br> <br>";
+            echo "<p style='background-color:" . random_color() . "';>Skrivet av " . "<a href='mailto:" . $row['skriven_av'] . "?subject='HTML link''>" . $row['skriven_av'] . "</a>" . "<span class='kommentar'>Inlägg: " . $row['kommentar'] . "</span> <br>" . $row['datum'] . " </p> <form action='ta_bort_inlagg.php?id=" . $row['id'] . "&skriven_av=" . $row['skriven_av'] . "&inloggning=" . $_SESSION['anvandernamn'] . "' method='post'><input type='submit' value='Ta bort'></form><hr> <br> <br>";
         }
     }
     echo "Svara på denna tråd: <br>

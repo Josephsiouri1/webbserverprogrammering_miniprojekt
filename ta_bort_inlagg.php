@@ -31,13 +31,13 @@
     $conn = new mysqli($servername, $username, $password, $dbname);
 
     $id =  $_GET['id'];
-    $skapad_av =  $_GET['skapad_av'];
+    $skapad_av =  $_GET['skriven_av'];
     $inloggning =  $_GET['inloggning'];
 
     if ($skapad_av == $inloggning) {
-        $sql = "DELETE FROM tradar WHERE id=$id";
+        $sql = "DELETE FROM inlagg WHERE id=$id";
         $result = $conn->query($sql);
-        echo "Tråden med id: " . $_GET['id'] . " togs bort.<br><br>";
+        echo "Inlägget med id: " . $_GET['id'] . " togs bort.<br><br>";
     } else {
         echo "Du kan inte ta bort andras inlägg.<br><br>";
     }
