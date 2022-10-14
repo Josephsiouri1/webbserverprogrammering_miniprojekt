@@ -25,101 +25,67 @@
     <?php
     session_start();
 
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "webbserverprogrammering";
+
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+
+    $sql = "SELECT * FROM users";
+    $result = $conn->query($sql);
+
+    $account_check = array();
     if (!isset($_SESSION["anvandernamn"])) {
         $anvandernamn = $_POST['anvandernamn'];
         $losenord = $_POST['losenord'];
+    } else {
+        $anvandernamn = $_SESSION['anvandernamn'];
+        $losenord = $_SESSION['losenord'];
+    }
+    while ($row = $result->fetch_assoc()) {
+        if ($anvandernamn == $row['username'] && $losenord == $row['password']) {
+            echo "Välkommen <a href='mailto:$anvandernamn?subject='HTML link''>$anvandernamn</a>";
 
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "webbserverprogrammering";
-
-        $conn = new mysqli($servername, $username, $password, $dbname);
-
-        $sql = "SELECT * FROM users";
-        $result = $conn->query($sql);
-
-        $account_check = array();
-        //problem med återinloggning
-        while ($row = $result->fetch_assoc()) {
-            if ($anvandernamn == $row['username'] && $losenord == $row['password']) {
-                echo "Välkommen <a href='mailto:$anvandernamn?subject='HTML link''>$anvandernamn</a>";
-
-                $_SESSION['anvandernamn'] = $anvandernamn;
-                $_SESSION['losenord'] = $losenord;
-                echo "<form action='nytrad.php' method='post'>
-                <input type='submit' value='Skapa ny tråd'>
-                </form> <br>";
-
-                $sql = "SELECT * FROM tradar";
-                $result = $conn->query($sql);
-
-
-                echo "Det finns $result->num_rows trådar: <br> <br>";
-
-                echo "<div class='titles'>";
-                echo "<span><b> Nr </b></span>";
-                echo "<span><b> Inläggen</b></span>";
-                echo "<span><b> Rubrik</b></span>";
-                echo "<span><b> Skapad av</b></span>";
-                echo "<span><b> Senaste inlägg</b></span>";
-                echo "</div>";
-
-                if ($result->num_rows > 0) {
-                    echo "<ol>";
-                    while ($row = $result->fetch_assoc()) {
-                        echo " <li class='list-item'>" . "<span>" . $row['id'] . "</span>" . "<form class='form' action='inlagg.php?id=" . $row['id'] . "'" . "method='post'>
-                    <input class='las' type='submit' value='läs'>
-                    </form>" . "<span>" .  $row['rubrik'] . "</span>" . "<span>" . "<a href='mailto:" . $row['skapad_av'] . "?subject='HTML link''>" . $row['skapad_av'] . "</a>" . "</span> " . "<span>" . $row['senaste_inlagg'] . "</span>" . "</li>";
-                    }
-                }
-                echo "</ol>";
-                array_push($account_check, false);
-            } else {
-                array_push($account_check, true);
-            }
-        }
-        if (!in_array(false, $account_check)) { //om det är en konto som matchar så körs inte den if-satsen
-            echo "Login misslyckades";
-        }
-    } else if (isset($_SESSION["anvandernamn"])) {
-        echo "Välkommen <a href='mailto:" . $_SESSION["anvandernamn"] . "?subject='HTML link''>" . $_SESSION["anvandernamn"] . "</a>";
-
-        echo "<form action='nytrad.php' method='post'>
+            $_SESSION['anvandernamn'] = $anvandernamn;
+            $_SESSION['losenord'] = $losenord;
+            echo "<form action='nytrad.php' method='post'>
             <input type='submit' value='Skapa ny tråd'>
-        </form> <br>";
+            </form> <br>";
 
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "webbserverprogrammering";
-
-        $conn = new mysqli($servername, $username, $password, $dbname);
-
-        $sql = "SELECT * FROM tradar";
-        $result = $conn->query($sql);
+            $sql = "SELECT * FROM tradar";
+            $result = $conn->query($sql);
 
 
-        echo "Det finns $result->num_rows trådar: <br> <br>";
+            echo "Det finns $result->num_rows trådar: <br> <br>";
 
-        echo "<div class='titles'>";
-        echo "<span><b> Nr </b></span>";
-        echo "<span><b> Inläggen</b></span>";
-        echo "<span><b> Rubrik</b></span>";
-        echo "<span><b> Skapad av</b></span>";
-        echo "<span><b> Senaste inlägg</b></span>";
-        echo "</div>";
+            echo "<div class='titles'>";
+            echo "<span><b> Nr </b></span>";
+            echo "<span><b> Inläggen</b></span>";
+            echo "<span><b> Rubrik</b></span>";
+            echo "<span><b> Skapad av</b></span>";
+            echo "<span><b> Senaste inlägg</b></span>";
+            echo "</div>";
 
-        if ($result->num_rows > 0) {
-            echo "<ol>";
-            while ($row = $result->fetch_assoc()) {
-                echo " <li class='list-item'>" . "<span>" . $row['id'] . "</span>" . "<form class='form' action='inlagg.php?id=" . $row['id'] . "'" . "method='post'>
+            if ($result->num_rows > 0) {
+                echo "<ol>";
+                while ($row = $result->fetch_assoc()) {
+                    echo " <li class='list-item'>" . "<span>" . $row['id'] . "</span>" . "<form class='form' action='inlagg.php?id=" . $row['id'] . "'" . "method='post'>
                 <input class='las' type='submit' value='läs'>
                 </form>" . "<span>" .  $row['rubrik'] . "</span>" . "<span>" . "<a href='mailto:" . $row['skapad_av'] . "?subject='HTML link''>" . $row['skapad_av'] . "</a>" . "</span> " . "<span>" . $row['senaste_inlagg'] . "</span>" . "</li>";
+                }
             }
+            echo "</ol>";
+            array_push($account_check, false);
+        } else {
+            array_push($account_check, true);
         }
-        echo "</ol>";
     }
+    if (!in_array(false, $account_check)) { //om det är en konto som matchar så körs inte den if-satsen
+        echo "Login misslyckades";
+    }
+
 
     ?>
 </body>
