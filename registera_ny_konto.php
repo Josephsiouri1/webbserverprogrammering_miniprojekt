@@ -29,7 +29,7 @@ if (!duplicate_account($result_users, $ny_anvandernamn, $ny_losenord)) {
         $result = $conn->query($sql);
         echo "Ny konto skapades!";
         echo "<form action='inloggning.php'>
-        <input type='submit' value='Gå tillbaka till inloggningssida'>
+        <input type='submit' value='Tillbaka till inloggningssida'>
     </form>";
     } else {
         header('Location: ' . './skapa_ny_konto.php');
