@@ -14,10 +14,11 @@
         Lösenord för användaren: <input type="password" name="ny_losenord"> <br> <br>
         <input type="submit" value="Skapa konto"> <br> <br>
     </form>
-    <form action='tradar.php' method='post'>
+    <form action='inloggning.php' method='post'>
         <input type='submit' value='Tillbaka till startsidan'>
     </form>
     <hr>
+
 </body>
 
 </html>
