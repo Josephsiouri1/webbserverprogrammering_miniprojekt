@@ -30,6 +30,9 @@
 
     $conn = new mysqli($servername, $username, $password, $dbname);
 
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
     $id =  $_GET['id'];
     $skapad_av =  $_GET['skapad_av'];
     $inloggning =  $_GET['inloggning'];
@@ -45,6 +48,7 @@
     echo "<form action='tradar.php' method='post'>
     <input type='submit' value='Tillbaka till startsidan'>
      </form>";
+    $conn->close();
     ?>
 </body>
 

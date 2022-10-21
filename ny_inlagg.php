@@ -34,8 +34,11 @@
     $password = "";
     $dbname = "webbserverprogrammering";
 
-    $conn = new mysqli($servername, $username, $password, $dbname); //or die???
+    $conn = new mysqli($servername, $username, $password, $dbname);
 
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
     $sql = "SELECT * FROM inlagg";
     $result = $conn->query($sql);
 
@@ -58,6 +61,7 @@
         <input type='submit' value='Försök igen'>
         </form> <br>";
     }
+    $conn->close();
     ?>
 </body>
 

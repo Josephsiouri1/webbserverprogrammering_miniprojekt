@@ -8,6 +8,9 @@ $dbname = "webbserverprogrammering";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
 $rubrik = $_POST["rubrik"];
 $inlagg = $_POST["inlagg"];
@@ -30,3 +33,4 @@ if ($rubrik && $inlagg) {
 } else {
     header('Location: ' . './fel_med_inlagg.php');
 }
+$conn->close();

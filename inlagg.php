@@ -35,6 +35,9 @@ session_start();
 
     $conn = new mysqli($servername, $username, $password, $dbname);
 
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
     $sql = "SELECT rubrik FROM tradar WHERE id=" . $_GET['id'];
     $result = $conn->query($sql);
 
@@ -73,6 +76,7 @@ session_start();
     <input type='password' name='check_password'> <br>
     <input type='submit' value='Publicera'>
    </form>";
+    $conn->close();
 
     ?>
 

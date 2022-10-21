@@ -22,6 +22,9 @@
 
     $conn = new mysqli($servername, $username, $password, $dbname);
 
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
     $anvandernamn = $_POST['anvandernamn'];
     $losenord = $_POST['losenord'];
 
@@ -33,8 +36,10 @@
     $_SESSION['anvandernamn'] = $anvandernamn;
     $_SESSION['losenord'] = $losenord;
 
+    $conn->close();
 
     header('Location: ' . './tradar.php');
+
     ?>
 
 </body>
