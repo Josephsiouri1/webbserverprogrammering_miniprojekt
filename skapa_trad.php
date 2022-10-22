@@ -16,7 +16,6 @@ $rubrik = $_POST["rubrik"];
 $inlagg = $_POST["inlagg"];
 $skapad_av = $_SESSION['anvandernamn'];
 
-
 $sql_tradar = "SELECT * FROM tradar";
 $result_tradar = $conn->query($sql_tradar);
 
