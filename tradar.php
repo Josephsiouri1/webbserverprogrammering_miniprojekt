@@ -22,6 +22,7 @@
         <input type="submit" value="Skapa ny konto">
     </form>
     <hr>
+    <?php error_reporting(E_ALL ^ E_NOTICE); ?>
     <?php
     session_start();
 
@@ -36,7 +37,7 @@
         die("Connection failed: " . $conn->connect_error);
     }
     $sql = "SELECT * FROM users";
-    $result = $conn->query($sql);
+    $result_tradar = $conn->query($sql);
 
     $account_check = array();
     if (!isset($_SESSION["anvandernamn"])) {
@@ -46,7 +47,7 @@
         $anvandernamn = $_SESSION['anvandernamn'];
         $losenord = $_SESSION['losenord'];
     }
-    while ($row = $result->fetch_assoc()) {
+    while ($row = $result_tradar->fetch_assoc()) {
         if ($anvandernamn == $row['username'] && $losenord == $row['password']) {
             echo "Välkommen <a href='mailto:$anvandernamn?subject='HTML link''>$anvandernamn</a>";
 
@@ -56,11 +57,11 @@
             <input type='submit' value='Skapa ny tråd'>
             </form> <br>";
 
-            $sql = "SELECT * FROM tradar";
-            $result = $conn->query($sql);
+            $sql_tradar = "SELECT * FROM tradar";
+            $result_tradar = $conn->query($sql_tradar);
 
 
-            echo "Det finns $result->num_rows trådar: <br> <br>";
+            echo "Det finns $result_tradar->num_rows trådar: <br> <br>";
 
             echo "<div class='titles'>";
             echo "<span><b> Nr </b></span>";
@@ -68,14 +69,21 @@
             echo "<span><b> Rubrik</b></span>";
             echo "<span><b> Skapad av</b></span>";
             echo "<span><b> Senaste inlägg</b></span>";
+            echo "<span><b> Ta bort </b></span>";
+            echo "<span><b> Gilla</b></span>";
             echo "</div>";
 
-            if ($result->num_rows > 0) {
+
+
+
+            if ($result_tradar->num_rows > 0) {
                 echo "<ol>";
-                while ($row = $result->fetch_assoc()) {
+                while ($row = $result_tradar->fetch_assoc()) {
+                    $sql_like_number = "SELECT * FROM gilla_tradar WHERE trad_id=" . $row['id'];
+                    $result_antal = $conn->query($sql_like_number);
                     echo " <li class='list-item'>" . "<span>" . $row['id'] . "</span>" . "<form class='form' action='inlagg.php?id=" . $row['id'] . "'" . "method='post'>
                 <input class='las' type='submit' value='läs'>
-                </form>" . "<span>" .  $row['rubrik'] . "</span>" . "<span>" . "<a href='mailto:" . $row['skapad_av'] . "?subject='HTML link''>" . $row['skapad_av'] . "</a>" . "</span> " . "<span>" . $row['senaste_inlagg'] . "</span>" . "<form action='ta_bort_trad.php?id=" . $row['id'] . "&skapad_av=" . $row['skapad_av'] . "&inloggning=" . $anvandernamn . "' method='post'><input type='submit' value='Ta bort'></form>" . "</li>";
+                </form>" . "<span>" .  $row['rubrik'] . "</span>" . "<span>" . "<a href='mailto:" . $row['skapad_av'] . "?subject='HTML link''>" . $row['skapad_av'] . "</a>" . "</span> " . "<span>" . $row['senaste_inlagg'] . "</span>" . "<form action='ta_bort_trad.php?id=" . $row['id'] . "&skapad_av=" . $row['skapad_av'] . "&inloggning=" . $anvandernamn . "' method='post'><input type='submit' value='Ta bort'></form>" . "<form action='gilla_trad.php?trad_id=" . $row['id'] . "' method='post'><input type='submit' value='Gilla'></form>" .  $result_antal->num_rows . "</li>";
                 }
             }
             echo "</ol>";

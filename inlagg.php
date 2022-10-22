@@ -66,7 +66,9 @@ session_start();
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            echo "<p style='background-color:" . random_color() . "';>Skrivet av " . "<a href='mailto:" . $row['skriven_av'] . "?subject='HTML link''>" . $row['skriven_av'] . "</a>" . "<span class='kommentar'>Inlägg: " . $row['kommentar'] . "</span> <br>" . $row['datum'] . " </p> <form action='ta_bort_inlagg.php?id=" . $row['id'] . "&skriven_av=" . $row['skriven_av'] . "&inloggning=" . $_SESSION['anvandernamn'] . "' method='post'><input type='submit' value='Ta bort'></form><hr> <br> <br>";
+            $sql_like_number = "SELECT * FROM gilla_inlagg WHERE inlagg_id=" . $row['id'];
+            $result_antal = $conn->query($sql_like_number);
+            echo "<p style='background-color:" . random_color() . "';>Skrivet av " . "<a href='mailto:" . $row['skriven_av'] . "?subject='HTML link''>" . $row['skriven_av'] . "</a>" . "<span class='kommentar'>Inlägg: " . $row['kommentar'] . "</span> <br>" . $row['datum'] . " </p><form action='gilla_inlagg.php?inlagg_id=" . $row['id'] . "' method='post'><input type='submit' value='Gilla'></form>" . $result_antal->num_rows . " <form action='ta_bort_inlagg.php?id=" . $row['id'] . "&skriven_av=" . $row['skriven_av'] . "&inloggning=" . $_SESSION['anvandernamn'] . "' method='post'><input type='submit' value='Ta bort'></form><hr> <br> <br>";
         }
     }
     echo "Svara på denna tråd: <br>
