@@ -24,7 +24,7 @@ $sql_inlagg = "SELECT * FROM inlagg";
 $result_inlagg = $conn->query($sql_inlagg);
 
 if ($rubrik && $inlagg) {
-    $sql = "INSERT INTO tradar (id, rubrik, skapad_av, senaste_inlagg) VALUES ($result_tradar->num_rows, '$rubrik', '$skapad_av', NOW())";
+    $sql = "INSERT INTO tradar (id, rubrik, skapad_av, senaste_inlagg) VALUES ($result_tradar->num_rows+1, '$rubrik', '$skapad_av', NOW())";
     $result = $conn->query($sql);
     $sql = "INSERT INTO inlagg (id, skriven_av, kommentar, datum, trad_id) VALUES ($result_inlagg->num_rows+1, '$skapad_av', '$inlagg', NOW(), $result_tradar->num_rows)";
     $result = $conn->query($sql);
