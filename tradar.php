@@ -72,8 +72,13 @@
             echo "<span><b> Gilla</b></span>";
             echo "</div>";
 
-
-
+            function test_input($data)
+            {
+                $data = trim($data);
+                $data = stripslashes($data);
+                $data = htmlspecialchars($data);
+                return $data;
+            }
 
             if ($result_tradar->num_rows > 0) {
                 echo "<ol>";
@@ -82,7 +87,7 @@
                     $result_antal = $conn->query($sql_like_number);
                     echo " <li class='list-item'>" . "<span>" . $row['id'] . "</span>" . "<form class='form' action='inlagg.php?id=" . $row['id'] . "'" . "method='post'>
                 <input class='las' type='submit' value='läs'>
-                </form>" . "<span>" .  $row['rubrik'] . "</span>" . "<span>" . "<a href='mailto:" . $row['skapad_av'] . "?subject='HTML link''>" . $row['skapad_av'] . "</a>" . "</span> " . "<span>" . $row['senaste_inlagg'] . "</span>" . "<form action='gilla_trad.php?trad_id=" . $row['id'] . "' method='post'><input type='submit' value='Gilla'></form>" .  $result_antal->num_rows . "</li>";
+                </form>" . "<span>" .  test_input($row['rubrik']) . "</span>" . "<span>" . "<a href='mailto:" . test_input($row['skapad_av']) . "?subject='HTML link''>" . test_input($row['skapad_av']) . "</a>" . "</span> " . "<span>" . test_input($row['senaste_inlagg']) . "</span>" . "<form action='gilla_trad.php?trad_id=" . $row['id'] . "' method='post'><input type='submit' value='Gilla'></form>" .  $result_antal->num_rows . "</li>";
                 }
             }
             echo "</ol>";
