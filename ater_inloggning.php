@@ -12,7 +12,7 @@
 
     <?php
     session_start();
-    session_destroy();
+    session_destroy(); //den tar bort den gamla session och startar ett nytt.
     session_start();
 
     $servername = "localhost";
