@@ -69,7 +69,6 @@
             echo "<span><b> Rubrik</b></span>";
             echo "<span><b> Skapad av</b></span>";
             echo "<span><b> Senaste inlägg</b></span>";
-            echo "<span><b> Ta bort </b></span>";
             echo "<span><b> Gilla</b></span>";
             echo "</div>";
 
@@ -83,7 +82,7 @@
                     $result_antal = $conn->query($sql_like_number);
                     echo " <li class='list-item'>" . "<span>" . $row['id'] . "</span>" . "<form class='form' action='inlagg.php?id=" . $row['id'] . "'" . "method='post'>
                 <input class='las' type='submit' value='läs'>
-                </form>" . "<span>" .  $row['rubrik'] . "</span>" . "<span>" . "<a href='mailto:" . $row['skapad_av'] . "?subject='HTML link''>" . $row['skapad_av'] . "</a>" . "</span> " . "<span>" . $row['senaste_inlagg'] . "</span>" . "<form action='ta_bort_trad.php?id=" . $row['id'] . "&skapad_av=" . $row['skapad_av'] . "&inloggning=" . $anvandernamn . "' method='post'><input type='submit' value='Ta bort'></form>" . "<form action='gilla_trad.php?trad_id=" . $row['id'] . "' method='post'><input type='submit' value='Gilla'></form>" .  $result_antal->num_rows . "</li>";
+                </form>" . "<span>" .  $row['rubrik'] . "</span>" . "<span>" . "<a href='mailto:" . $row['skapad_av'] . "?subject='HTML link''>" . $row['skapad_av'] . "</a>" . "</span> " . "<span>" . $row['senaste_inlagg'] . "</span>" . "<form action='gilla_trad.php?trad_id=" . $row['id'] . "' method='post'><input type='submit' value='Gilla'></form>" .  $result_antal->num_rows . "</li>";
                 }
             }
             echo "</ol>";
