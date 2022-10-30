@@ -48,8 +48,10 @@
     $trad_id = $_GET['trad_id'];
 
     if ($inlagg && $check_password == $_SESSION['losenord']) {
-        $sql = "INSERT INTO inlagg (id, skriven_av, kommentar, datum, trad_id) VALUES ($result->num_rows+1,'$skapad_av', '$inlagg', NOW(), $trad_id)";
-        $result = $conn->query($sql);
+
+        $sql = $conn->prepare("INSERT INTO inlagg (id,skriven_av,kommentar, datum, trad_id) VALUES ($result->num_rows+1, ?, ?,NOW(), $trad_id)");
+        $sql->bind_param('ss', $skapad_av, $inlagg);
+        $sql->execute();
 
         $sql = "UPDATE tradar SET senaste_inlagg = NOW() WHERE id=$trad_id";
         $result = $conn->query($sql);

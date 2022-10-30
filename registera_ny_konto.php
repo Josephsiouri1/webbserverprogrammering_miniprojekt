@@ -28,8 +28,11 @@ function duplicate_account($result_users, $ny_anvandernamn, $ny_losenord)
 if (!duplicate_account($result_users, $ny_anvandernamn, $ny_losenord)) {
 
     if ($ny_anvandernamn && $ny_losenord) {
-        $sql = "INSERT INTO users (id, username, password) VALUES ($result_users->num_rows+1, '$ny_anvandernamn', '$ny_losenord');";
-        $result = $conn->query($sql);
+
+        $sql = $conn->prepare("INSERT INTO users (id,unsername,password) VALUES ($result_users->num_rows+1, ?, ?,)");
+        $sql->bind_param('ss', $ny_anvandernamn, $ny_losenord);
+        $sql->execute();
+
         echo "Ny konto skapades!";
         echo "<form action='inloggning.php'>
         <input type='submit' value='Tillbaka till inloggningssida'>
