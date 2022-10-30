@@ -49,15 +49,15 @@
 
     $account_check = array();
     if (!isset($_SESSION["anvandernamn"])) {
-        $anvandernamn = test_input($_POST['anvandernamn']);
-        $losenord = test_input($_POST['losenord']);
+        $anvandernamn = $_POST['anvandernamn'];
+        $losenord = $_POST['losenord'];
     } else {
-        $anvandernamn = test_input($_SESSION['anvandernamn']);
-        $losenord = test_input($_SESSION['losenord']);
+        $anvandernamn = $_SESSION['anvandernamn'];
+        $losenord = $_SESSION['losenord'];
     }
     while ($row = $result_tradar->fetch_assoc()) {
         if ($anvandernamn == $row['username'] && $losenord == $row['password']) {
-            echo "Välkommen <a href='mailto:$anvandernamn?subject='HTML link''>$anvandernamn</a>";
+            echo "Välkommen <a href='mailto:" . test_input($anvandernamn) . "?subject='HTML link''>" . test_input($anvandernamn) . "</a>";
 
             $_SESSION['anvandernamn'] = $anvandernamn;
             $_SESSION['losenord'] = $losenord;
