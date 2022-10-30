@@ -25,7 +25,14 @@ session_start()
     </form>
     <hr>
     <?php
-    echo "Inloggad som " . "<a href='mailto:" . $_SESSION['anvandernamn'] . "?subject='HTML link''>" . $_SESSION['anvandernamn'] . "</a>";
+    function test_input($data)
+    {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+    echo "Inloggad som " . "<a href='mailto:" . test_input($_SESSION['anvandernamn']) . "?subject='HTML link''>" . test_input($_SESSION['anvandernamn']) . "</a>";
     echo "<form action='tradar.php' method='post'>
     <input type='submit' value='Tillbaka till startsidan'>
      </form> <br>"

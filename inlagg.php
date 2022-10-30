@@ -41,7 +41,15 @@ session_start();
     $sql = "SELECT rubrik FROM tradar WHERE id=" . $_GET['id'];
     $result = $conn->query($sql);
 
-    echo "Inloggad som " . "<a href='mailto:" . $_SESSION['anvandernamn'] . "?subject='HTML link''>" . $_SESSION['anvandernamn'] . "</a>";
+    function test_input($data)
+    {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
+    echo "Inloggad som " . "<a href='mailto:" . test_input($_SESSION['anvandernamn']) . "?subject='HTML link''>" . test_input($_SESSION['anvandernamn']) . "</a>";
     echo "<form action='tradar.php' method='post'>
     <input type='submit' value='Tillbaka till startsidan'>
      </form> <br>";
@@ -63,19 +71,11 @@ session_start();
         return $array_colors[$array_index];
     }
 
-    function test_input($data)
-    {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
-    }
-
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             $sql_like_number = "SELECT * FROM gilla_inlagg WHERE inlagg_id=" . $row['id'];
             $result_antal = $conn->query($sql_like_number);
-            echo "<p style='background-color:" . random_color() . "';>Skrivet av " . "<a href='mailto:" . test_input($row['skriven_av']) . "?subject='HTML link''>" . test_input($row['skriven_av']) . "</a>" . "<br><span class='kommentar'>Inlägg: " . test_input($row['kommentar']) . "</span> <br>" . $row['datum'] . " </p><form action='gilla_inlagg.php?inlagg_id=" . $row['id'] . "' method='post'><input type='submit' value='Gilla'></form>" . "<span>Antal gillar:</span>" . "  " . $result_antal->num_rows . "<hr> <br> <br>";
+            echo "<p style='background-color:" . random_color() . "';>Skrivet av " . "<a href='mailto:" . $row['skriven_av'] . "?subject='HTML link''>" . $row['skriven_av'] . "</a>" . "<br><span class='kommentar'>Inlägg: " . test_input($row['kommentar']) . "</span> <br>" . $row['datum'] . " </p><form action='gilla_inlagg.php?inlagg_id=" . $row['id'] . "' method='post'><input type='submit' value='Gilla'></form>" . "<span>Antal gillar:</span>" . "  " . $result_antal->num_rows . "<hr> <br> <br>";
         }
     }
     echo "Svara på denna tråd: <br>

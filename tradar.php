@@ -39,13 +39,21 @@
     $sql = "SELECT * FROM users";
     $result_tradar = $conn->query($sql);
 
+    function test_input($data)
+    {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
     $account_check = array();
     if (!isset($_SESSION["anvandernamn"])) {
-        $anvandernamn = $_POST['anvandernamn'];
-        $losenord = $_POST['losenord'];
+        $anvandernamn = test_input($_POST['anvandernamn']);
+        $losenord = test_input($_POST['losenord']);
     } else {
-        $anvandernamn = $_SESSION['anvandernamn'];
-        $losenord = $_SESSION['losenord'];
+        $anvandernamn = test_input($_SESSION['anvandernamn']);
+        $losenord = test_input($_SESSION['losenord']);
     }
     while ($row = $result_tradar->fetch_assoc()) {
         if ($anvandernamn == $row['username'] && $losenord == $row['password']) {
@@ -53,13 +61,13 @@
 
             $_SESSION['anvandernamn'] = $anvandernamn;
             $_SESSION['losenord'] = $losenord;
+
             echo "<form action='nytrad.php' method='post'>
             <input type='submit' value='Skapa ny tråd'>
             </form> <br>";
 
             $sql_tradar = "SELECT * FROM tradar";
             $result_tradar = $conn->query($sql_tradar);
-
 
             echo "Det finns $result_tradar->num_rows trådar: <br> <br>";
 
@@ -72,14 +80,6 @@
             echo "<span><b> Gilla</b></span>";
             echo "</div>";
 
-            function test_input($data)
-            {
-                $data = trim($data);
-                $data = stripslashes($data);
-                $data = htmlspecialchars($data);
-                return $data;
-            }
-
             if ($result_tradar->num_rows > 0) {
                 echo "<ol>";
                 while ($row = $result_tradar->fetch_assoc()) {
@@ -87,7 +87,7 @@
                     $result_antal = $conn->query($sql_like_number);
                     echo " <li class='list-item'>" . "<span>" . $row['id'] . "</span>" . "<form class='form' action='inlagg.php?id=" . $row['id'] . "'" . "method='post'>
                 <input class='las' type='submit' value='läs'>
-                </form>" . "<span>" .  test_input($row['rubrik']) . "</span>" . "<span>" . "<a href='mailto:" . test_input($row['skapad_av']) . "?subject='HTML link''>" . test_input($row['skapad_av']) . "</a>" . "</span> " . "<span>" . test_input($row['senaste_inlagg']) . "</span>" . "<form action='gilla_trad.php?trad_id=" . $row['id'] . "' method='post'><input type='submit' value='Gilla'></form>" .  $result_antal->num_rows . "</li>";
+                </form>" . "<span>" .  test_input($row['rubrik']) . "</span>" . "<span>" . "<a href='mailto:" . $row['skapad_av'] . "?subject='HTML link''>" . $row['skapad_av'] . "</a>" . "</span> " . "<span>" . $row['senaste_inlagg'] . "</span>" . "<form action='gilla_trad.php?trad_id=" . $row['id'] . "' method='post'><input type='submit' value='Gilla'></form>" .  $result_antal->num_rows . "</li>";
                 }
             }
             echo "</ol>";
