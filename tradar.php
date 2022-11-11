@@ -56,7 +56,7 @@
         $losenord = $_SESSION['losenord'];
     }
     while ($row = $result_tradar->fetch_assoc()) {
-        if ($anvandernamn == $row['username'] && $losenord == $row['password']) {
+        if ($anvandernamn == $row['username'] && sha1($losenord) == $row['password']) {
             echo "Välkommen <a href='mailto:" . test_input($anvandernamn) . "?subject='HTML link''>" . test_input($anvandernamn) . "</a>";
 
             $_SESSION['anvandernamn'] = $anvandernamn;
