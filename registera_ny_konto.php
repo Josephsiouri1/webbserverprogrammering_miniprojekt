@@ -17,20 +17,21 @@ $ny_losenord = $_POST['ny_losenord'];
 $sql = "SELECT * FROM users";
 $result_users = $conn->query($sql);
 
-function duplicate_account($result_users, $ny_anvandernamn, $ny_losenord)
+function duplicate_account($result_users, $ny_anvandernamn)
 {
     while ($row = $result_users->fetch_assoc()) {
-        if ($ny_anvandernamn == $row['username'] && $ny_losenord == $row['password']) {
+        if ($ny_anvandernamn == $row['username']) {
             return true;
         }
     }
 }
-if (!duplicate_account($result_users, $ny_anvandernamn, $ny_losenord)) {
+if (!duplicate_account($result_users, $ny_anvandernamn)) {
 
     if ($ny_anvandernamn && $ny_losenord) {
 
         $sql = $conn->prepare("INSERT INTO users (id,username,password) VALUES ($result_users->num_rows+1, ?, ?)");
-        $sql->bind_param('ss', $ny_anvandernamn, $ny_losenord);
+        $hash_losenord = sha1($ny_losenord);
+        $sql->bind_param('ss', $ny_anvandernamn, $hash_losenord);
         $sql->execute();
 
         echo "Ny konto skapades!";
