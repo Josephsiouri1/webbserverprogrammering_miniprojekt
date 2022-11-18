@@ -45,7 +45,7 @@ if (!duplicate_account($result_users, $ny_anvandernamn)) {
     </form>";
     }
 } else {
-    echo "Konton du skrev är redan skapat!";
+    echo "Användernamnet är redan använt, prova något annat.";
     echo "<form action='skapa_ny_konto.php'>
         <input type='submit' value='Försök igen'>
     </form>";
