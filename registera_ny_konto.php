@@ -30,7 +30,7 @@ if (!duplicate_account($result_users, $ny_anvandernamn)) {
     if ($ny_anvandernamn && $ny_losenord) {
 
         $sql = $conn->prepare("INSERT INTO users (id,username,password) VALUES ($result_users->num_rows+1, ?, ?)");
-        $hash_losenord = sha1($ny_losenord);
+        $hash_losenord = password_hash($ny_losenord, PASSWORD_DEFAULT);
         $sql->bind_param('ss', $ny_anvandernamn, $hash_losenord);
         $sql->execute();
 
